@@ -44,6 +44,7 @@ messages, PR descriptions, and issue text.
 | Simple verb forms | Use past, present, and future only. |
 | One word, one meaning | Do not use synonyms for variation. Pick one term and keep it. |
 | No idioms, metaphors, or slang | Use plain, literal language. |
+| No em dashes | Use periods, commas, or parentheses instead. |
 | Use articles | Use "the" and "a" where grammar permits. |
 
 ### Brevity

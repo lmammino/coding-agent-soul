@@ -1,10 +1,10 @@
-# 🤖 agents.md
+# 🤖 coding-agent-soul
 
 > Does it really have a soul, though? 🤌 💀
 
 An opinionated `AGENTS.md` template born from personal preference, hard-won
 experience, and a healthy amount of frustration with AI agents that write
-essays instead of code. It might not be for everyone — and that is fine.
+essays instead of code. It might not be for everyone, and that is fine.
 
 **Use it as a starting point, not a gospel.** Tweak it, break it, make it
 yours. Your agent, your rules. 🫡
@@ -13,11 +13,11 @@ yours. Your agent, your rules. 🫡
 
 ## 🤔 What is AGENTS.md?
 
-`AGENTS.md` is a markdown file that gives AI coding agents the context and
-rules they need to work in your codebase. It is injected into every agent
-session, so every instruction matters. A good `AGENTS.md` is the difference
-between an agent that writes clean, layered code and one that leaves a trail
-of magic numbers and 8-level nested ifs. 😱
+[`AGENTS.md`](https://agents.md/) is a markdown file that gives AI coding agents
+the context and rules they need to work in your codebase. It is injected into
+every agent session, so every instruction matters. A good `AGENTS.md` is the
+difference between an agent that writes clean, layered code and one that leaves
+a trail of magic numbers and 8-level nested ifs. 😱
 
 This repo maintains a universal, project-agnostic version. You copy it into
 a project, fill in the project-specific bits, and go.
@@ -40,7 +40,7 @@ same file.
 ```
 
 The agent will fetch the file, ask you a few questions, and set everything
-up. You know — the thing you were going to do manually anyway, but now it
+up. You know, the thing you were going to do manually anyway, but now it
 takes 30 seconds. ⏱️
 
 ### The manual way (for the hands-on types) 🛠️
@@ -61,7 +61,7 @@ takes 30 seconds. ⏱️
 
 | Section | What it does |
 |---------|-------------|
-| 🚧 Boundaries | Always / ask first / never — keeps agents from going rogue |
+| 🚧 Boundaries | Always / ask first / never. Keeps agents from going rogue. |
 | 🗣️ Language and Tone | STE rules, brevity, honesty, depth of explanation |
 | 💻 Code Style | Naming, constants, enums, indentation, spacing, comments |
 | 🏗️ Architecture | Layered hierarchy, abstraction, member visibility |
@@ -84,5 +84,5 @@ Any tool that reads `AGENTS.md` natively also works without a symlink. 🎉
 
 ## ⚖️ License
 
-MIT — do whatever you want. Just don't blame me if your agent develops a
+MIT. Do whatever you want. Just don't blame me if your agent develops a
 personality. 🤖✨
