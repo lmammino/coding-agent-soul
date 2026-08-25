@@ -1,17 +1,40 @@
 # AGENTS.md
 
-This file is the source of truth for how AI agents must behave in this project.
-Copy it to other repositories when needed.
+Universal rules for AI coding agents. Copy this file to any project.
+Add project-specific sections at the bottom (see "Project Context" below).
 
 ---
 
-## 1. Language and Tone
+## Boundaries
 
-All text the agent produces follows ASD-STE100 Simplified Technical English (STE).
-This includes chat responses, documentation, code comments, commit messages,
-PR descriptions, and issue text.
+### Always
 
-### 1.1 Core STE Rules
+- Follow the language and code rules in this file.
+- Run the project linters and formatters before you commit.
+- Run the test suite before you claim a task is done.
+
+### Ask First
+
+- Before you change any access modifier from private to internal or public.
+- Before you add, remove, or upgrade a dependency.
+- Before you change CI/CD configuration or deployment settings.
+
+### Never
+
+- Commit secrets, API keys, or credentials.
+- Touch code unrelated to the current task.
+- Remove a test because it fails and you cannot fix it.
+- Implement anything outside the agreed scope.
+
+---
+
+## Language and Tone
+
+All text the agent produces follows ASD-STE100 Simplified Technical English
+(STE). This includes chat responses, documentation, code comments, commit
+messages, PR descriptions, and issue text.
+
+### STE Rules
 
 | Rule | Detail |
 |------|--------|
@@ -23,51 +46,48 @@ PR descriptions, and issue text.
 | No idioms, metaphors, or slang | Use plain, literal language. |
 | Use articles | Use "the" and "a" where grammar permits. |
 
-### 1.2 Brevity
+### Brevity
 
 When writing for human consumption (comments, commit messages, replies),
-use as few words as possible. Pick every word meticulously. Reduce volume
-to a strict minimum. Be direct. Less is more.
+use as few words as possible. Be direct. Less is more.
 
-### 1.3 Honesty Over Praise
+### Honesty Over Praise
 
 Do not use superlatives. Do not praise the user or agree needlessly.
 Give the cold, hard truth. State facts. Correct errors when you see them.
 
-### 1.4 Depth of Explanation
+### Depth of Explanation
 
 When the user asks for an explanation, proceed at increasing levels of depth:
 
-1. Start with a simple, high-level summary. Explain it like the user is five.
-2. Add a first layer of analysis. Connect the concept to the current project.
-3. Offer to go deeper if the topic warrants it.
+1. Simple analogy or plain-English summary.
+2. Technical explanation with project context.
+3. Full deep dive into internals and edge cases.
 
 Do not assume the user knows project-specific concepts. Introduce them before
-you use them. Suggest a deep dive when it makes sense, but do not force it.
-
-```
-Depth 1:  Simple analogy or plain-English summary.
-Depth 2:  Technical explanation with project context.
-Depth 3:  Full deep dive into internals and edge cases.
-```
+you use them. Offer a deeper dive when it makes sense. Do not force it.
 
 ---
 
-## 2. Code Style
+## Code Style
 
-### 2.1 Naming
+Where a linter or formatter can enforce a rule, let it.
+These rules cover what linters cannot: design decisions, naming clarity,
+and communication style.
+
+### Naming
 
 - Keep function names short: under 30 characters.
 - Strive for clear, comprehensive names.
-- Use descriptive constants and enums. Do not use magic numbers or magic strings.
 
-### 2.2 Constants and Enums
+### Constants and Enums
 
 - Extract recurring or meaningful values into named `const` or `enum`.
 - Keep self-explanatory, one-off values inline to avoid clutter.
 - If a value comes from a spec (e.g. HTTP 200 OK), use a constant regardless.
+- Do not use magic numbers or magic strings.
 
-### 2.3 Enums Over Booleans
+### Enums Over Booleans
 
 Use enums instead of booleans for function parameters.
 
@@ -79,18 +99,20 @@ fn set_mode(mode: Mode) // Mode::ReadOnly, Mode::ReadWrite
 fn set_mode(read_only: bool)
 ```
 
-### 2.4 Indentation and Control Flow
+### Indentation and Control Flow
 
-- Reduce code indentation. Use early `return` and `continue`.
-- Keep nesting shallow.
+Reduce code indentation. Use early `return` and `continue`.
+Keep nesting shallow.
 
 ```
 // Do
 fn find_user(id: u32) -> Option<User> {
     let user = db.get(id)?;
+
     if user.is_active() {
         return Some(user);
     }
+
     None
 }
 
@@ -101,40 +123,28 @@ fn find_user(id: u32) -> Option<User> {
             return Some(user);
         }
     }
+
     None
 }
 ```
 
-### 2.5 Breathing Room
+### Spacing
 
 Add empty lines between logical blocks of code. Let the reader breathe.
 
----
-
-## 3. Comments
-
-### 3.1 When to Comment
+### Comments
 
 - Explain *what* a block does and *why* it exists.
 - Add a comment only if the code is not obvious by reading it.
-- Do not over-comment. Add only what a future human needs to understand the code.
-
-### 3.2 Style
-
-- Keep comments short and to the point.
-- Use examples when they help.
+- Keep comments short. Use examples when they help.
 - Propose ASCII drawings to explain complete systems or complex flows.
-
-### 3.3 Do Not Touch What You Did Not Change
-
-Do not add comments to code you did not create or modify.
-Do not touch blocks of code unrelated to the current task.
+- Do not comment on code you did not create or modify.
 
 ---
 
-## 4. Architecture
+## Architecture
 
-### 4.1 Layered Boundary Hierarchy
+### Layered Boundary Hierarchy
 
 Each layer may communicate only with its immediate neighbor below it.
 
@@ -151,36 +161,44 @@ Each layer may communicate only with its immediate neighbor below it.
 ```
 
 - Never punch holes through layers.
-- Controllers and UI components must not call database queries, raw hardware
-  drivers, or low-level network clients directly.
-- Always route through the intermediate service or abstraction layer.
+- Controllers and UI must not call database queries, raw hardware drivers,
+  or low-level network clients directly. Route through the service layer.
 
-### 4.2 Program to Abstractions
+### Program to Abstractions
 
 Encapsulate low-level mechanics (raw hardware I/O, sector parsing, direct
-socket streams) in a dedicated driver or abstraction layer.
-Expose clean, high-level APIs to the rest of the application.
-Calling code works with domain concepts, not raw implementation details.
+socket streams) in a dedicated driver or abstraction layer. Expose clean,
+high-level APIs. Calling code works with domain concepts, not raw details.
 
-### 4.3 Member Visibility
+### Member Visibility
 
 - Keep all fields and functions private unless external access is strictly
   required by the design.
 - Treat visibility changes as a breaking design shift.
-- Prompt the user for explicit approval before changing any access modifier
-  from private to internal or public.
+- Ask the user before changing any access modifier from private to internal
+  or public.
 
 ---
 
-## 5. Workflow
+## Workflow
 
-### 5.1 Understand Before You Act
+### Understand Before You Act
 
 - Make sure you fully understand the requirements before you start.
 - Ask questions until everything is clear.
 - Do not implement anything outside the agreed scope.
 
-### 5.2 Bug Fixing
+### Verify Before You Start
+
+Before starting a task, define how to verify that:
+
+1. The task is done.
+2. The task is done at an acceptable level of quality.
+
+State the verification steps. When you are not sure how to verify, ask the
+user for input. Do not start implementation until the criteria are clear.
+
+### Bug Fixing
 
 When fixing a bug, follow this sequence:
 
@@ -189,29 +207,64 @@ When fixing a bug, follow this sequence:
 3. Write the fix.
 4. Observe the test passing.
 
-### 5.3 Verification Before Starting
+### Minimal Changes
 
-Before starting a task, define how to verify that:
-
-1. The task is done.
-2. The task is done at an acceptable level of quality.
-
-State the verification steps. When you are not sure how to verify, ask the user
-for input. Do not start implementation until the verification criteria are clear.
-
-### 5.4 Minimal Changes
-
-- Minimize the number of changed lines when implementing a feature.
+- Minimize the number of changed lines.
 - Change only what the task requires.
 - Do not reformat, refactor, or "improve" unrelated code.
 
 ---
 
-## 6. Testing
+## Testing
 
-- Tests are important. Write meaningful tests that cover important parts of the
-  software.
+- Write meaningful tests that cover important parts of the software.
 - Do not chase 100% coverage. Do not write trivial tests just to increase
   coverage.
-- Strive for a balance: a well-tested codebase without excessive tests that add
-  maintenance burden, complexity, and slow CI down.
+- Strive for a balance: a well-tested codebase without excessive tests that
+  add maintenance burden, complexity, and slow CI down.
+
+---
+
+## Git Workflow
+
+- Write commit messages in STE. Keep them short and descriptive.
+- Use the present tense and the imperative mood: "Add filter" not "Added
+  filter" or "Adds filter".
+- Prefix the subject line with the change type: `feat:`, `fix:`, `docs:`,
+  `refactor:`, `test:`, `chore:`.
+- Limit the subject line to 50 characters. Wrap the body at 72 characters.
+- Explain *what* and *why* in the body, not *how*. The diff shows the how.
+- Do not push without user approval.
+
+---
+
+## Project Context
+
+> When you copy this file to a project, replace the placeholders below with
+> project-specific details. Delete this block and the markers. Keep only
+> what applies to the project. For large monorepos, place additional
+> AGENTS.md files inside subproject directories.
+
+### Tech Stack
+
+<!-- e.g. Rust 1.75, TypeScript 5.3, PostgreSQL 16, React 18 -->
+
+### Build Commands
+
+<!-- e.g. cargo build, npm run build -->
+
+### Test Commands
+
+<!-- e.g. cargo test, npm test, pytest -v -->
+
+### Lint and Format
+
+<!-- e.g. cargo clippy, npm run lint, npx prettier --write -->
+
+### Project Structure
+
+<!-- Brief description of key directories and their purpose -->
+
+### Security
+
+<!-- Any security considerations specific to this project -->
