@@ -44,6 +44,15 @@ They do not claim full ASD-STE100 compliance.
 This scope includes chat responses, documentation, code comments, commit
 messages, PR descriptions, and issue text.
 
+### AI Wording
+
+Use common, literal, task-specific wording.
+Avoid stock AI phrasing, vague intensifiers, dramatic framing, forced contrasts,
+and unnecessary claims of importance or precision.
+Avoid terms such as `load-bearing`, `seam`, `halves`, `leg`, `quietly`,
+`byte-identical`, `ruling`, and `genuine` when a plain alternative preserves
+the meaning.
+
 ### STE-Inspired Writing Rules
 
 | Rule | Detail |
