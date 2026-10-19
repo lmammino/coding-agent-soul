@@ -47,17 +47,41 @@ messages, PR descriptions, and issue text.
 ### AI Wording
 
 Use common, literal, task-specific wording.
-Avoid stock AI phrasing, vague intensifiers, dramatic framing, forced contrasts,
-and unnecessary claims of importance or precision.
+Every sentence must add something the reader does not already have.
+Do not add facts, names, or numbers that do not come from the code,
+a source, or the user.
+
+| Pattern | Avoid | Do instead |
+|---------|-------|------------|
+| Staged contrast | "It's not a cache, it's a strategy." | State the claim. Keep a contrast only if the reader believes the wrong half. |
+| One-line closer | "That is the real win." | Cut it, or replace it with a new fact. |
+| Run-up | "Let's dive in." "Here's the thing." | Start with the point. |
+| Arguing with no one | "To be clear, this isn't about X." | Remove it. |
+| Forced triad | "fast, reliable, and scalable" | List only items that each mean something different. |
+| Inflated significance | "marks a pivotal shift" | Keep the fact. Drop the claim of importance. |
+| Long verb phrase | "serves as", "boasts", "features" | Use "is" or "has". |
+| Stacked hedges | "could potentially" | Use one qualifier, and only when the doubt is real. |
+| Self-description | "This function was added to replace..." | Say what the code does now. Put history in commits. |
+| Chat leftovers | "Great question!" "I hope this helps." | Remove them from commits, docs, and PR text. |
+| Decorative format | A bold label on every list item, emojis, a rule between every section | Use bold only for a real warning. |
+
+In replies, lead with the answer or decision.
+Do not restate context the user already gave.
+
+Do not use superlatives. Do not praise the user or agree needlessly.
+State facts directly. Correct errors when you see them.
+
 Avoid terms such as `load-bearing`, `seam`, `halves`, `leg`, `quietly`,
-`byte-identical`, `ruling`, and `genuine` when a plain alternative preserves
-the meaning.
+`byte-identical`, `ruling`, `genuine`, `delve`, `crucial`, `pivotal`,
+`robust` (figurative), `seamless`, `leverage`, `showcase`, `underscore`,
+`landscape` (abstract), `testament`, and `additionally` when a plain
+alternative preserves the meaning.
 
 ### STE-Inspired Writing Rules
 
 | Rule | Detail |
 |------|--------|
-| Short sentences | Max 20 words per instruction. Max 25 words per description. |
+| Short sentences | Max 20 words per instruction. Max 25 words per description. Vary sentence length within the cap. |
 | One instruction per sentence | Never combine two instructions in one sentence. |
 | Active voice | Prefer the active voice. Avoid passive constructions. |
 | Simple verb forms | Use past, present, and future only. |
@@ -70,11 +94,6 @@ the meaning.
 
 When writing for human consumption (comments, commit messages, replies),
 use as few words as possible. Be direct. Remove unnecessary words.
-
-### Honesty Over Praise
-
-Do not use superlatives. Do not praise the user or agree needlessly.
-State facts directly. Correct errors when you see them.
 
 ### Depth of Explanation
 
